@@ -1,0 +1,12 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://petcare.com/sitemap.xml
+
+# Disallow admin and auth pages
+Disallow: /admin/
+Disallow: /signin
+Disallow: /signup
+Disallow: /api/
