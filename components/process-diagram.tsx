@@ -32,10 +32,10 @@ export function ProcessDiagram() {
       </div>
 
       {/* Right icons with brighter gradient overlays and adjusted spacing */}
-      <div className="absolute left-1/2 top-[35%] translate-x-[150px]">
+      <div className="absolute left-1/2 top-1/2 -translate-y-1/2 translate-x-[150px]">
         <div className="relative">
           {/* Vertical connecting line to Stethoscope */}
-          <div className="absolute left-1/2 top-[100%] h-24 w-[2px]
+          <div className="absolute left-1/2 top-[calc(100%+12px)] h-24 w-[2px]
             bg-gradient-to-b from-purple-500/40 to-red-400/40 
             opacity-70" />
           <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/40 to-red-400/40 
@@ -45,7 +45,7 @@ export function ProcessDiagram() {
           </div>
         </div>
       </div>
-      <div className="absolute left-1/2 top-[65%] translate-x-[150px]">
+      <div className="absolute left-1/2 top-[calc(50%+48px)] translate-x-[150px]">
         <div className="relative">
           <div className="absolute -inset-1 bg-gradient-to-br from-red-400/40 to-blue-400/40 
             rounded-full opacity-70" />
