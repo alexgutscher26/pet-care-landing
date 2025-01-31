@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Badge } from "@/components/ui/badge"
 import { CTAButton } from "@/components/animated-button"
@@ -12,8 +12,13 @@ import { AuroraText } from "./ui/aurora-text"
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const startRef = useRef<HTMLDivElement>(null);
-  const endRef = useRef<HTMLDivElement>(null);
+  const div1Ref = useRef<HTMLDivElement>(null);
+  const div2Ref = useRef<HTMLDivElement>(null);
+  const div3Ref = useRef<HTMLDivElement>(null);
+  const div4Ref = useRef<HTMLDivElement>(null);
+  const div5Ref = useRef<HTMLDivElement>(null);
+  const div6Ref = useRef<HTMLDivElement>(null);
+  const div7Ref = useRef<HTMLDivElement>(null);
 
   const avatars = [
     {
@@ -64,23 +69,21 @@ export function Hero() {
         <p className="text-sm text-muted-foreground">Quick access to nearby vets and emergency care facilities</p>
       </div>
     </div>,
-  ]
+  ];
 
   return (
     <section className="relative min-h-screen" ref={containerRef}>
-      {/* Animated List - Bottom Left Corner */}
       <div className="absolute bottom-8 left-8 w-80">
         <AnimatedList delay={800} className="w-full">
           {features}
         </AnimatedList>
       </div>
 
-      {/* Main Hero Content */}
       <div className="flex min-h-screen items-center justify-center">
         <div className="container flex flex-col items-center px-4 md:px-6">
           <AnimatedShinyText className="inline-flex secondary mb-6 items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
-          <Badge>✨ Introducing Magic UI</Badge>
-        </AnimatedShinyText>
+            <Badge>✨ Introducing Magic UI</Badge>
+          </AnimatedShinyText>
 
           <h1 className="text-center font-serif text-4xl font-medium tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
             Your <AuroraText>Personal</AuroraText>
@@ -97,17 +100,15 @@ export function Hero() {
             <CTAButton>Start Your Journey</CTAButton>
           </div>
 
-
-
-          
-          {/* Avatar Circles */}
           <div className="mt-8">
             <AvatarCircles numPeople={99} avatarUrls={avatars} />
           </div>
 
-          <p className="mt-6 text-center text-sm text-muted-foreground">30-day money back guarantee • Cancel anytime</p>
+          <p suppressHydrationWarning className="mt-6 text-center text-sm text-muted-foreground">
+            30-day money back guarantee • Cancel anytime
+          </p>
         </div>
       </div>
     </section>
-  )
+  );
 }
