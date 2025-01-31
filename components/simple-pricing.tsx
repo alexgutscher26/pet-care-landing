@@ -6,9 +6,9 @@ import type React from "react" // Added import for React
 export function SimplePricing() {
   return (
     <section className="relative py-24 overflow-hidden ">
-      {/* Enhanced gradient background */}
+      {/* Blue to Red gradient background */}
       <div
-        className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-background 
+        className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-red-500/20 
         opacity-50 blur-3xl"
       />
 
