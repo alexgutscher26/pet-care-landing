@@ -34,7 +34,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(session?.user ?? null);
       setLoading(false);
 
-      if (event === 'SIGNED_IN') {
+      // Only redirect on explicit sign in/out events
+      if (event === 'SIGNED_IN' && pathname === '/signin') {
         router.push('/dashboard');
         router.refresh();
       } else if (event === 'SIGNED_OUT') {
@@ -46,63 +47,47 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => {
       subscription.unsubscribe();
     };
-  }, [router]);
+  }, [router, pathname]);
 
   const signIn = async (email: string, password: string) => {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      
-      if (error) throw error;
-      
-      if (data.session) {
-        setUser(data.session.user);
-        await router.push('/dashboard');
-        router.refresh();
-      }
-    } catch (error) {
-      console.error('Sign in error:', error);
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
       throw error;
     }
   };
 
   const signUp = async (email: string, password: string) => {
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-      
-      if (error) throw error;
-      
-      if (data.session) {
-        setUser(data.session.user);
-        await router.push('/dashboard');
-        router.refresh();
-      }
-    } catch (error) {
-      console.error('Sign up error:', error);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
       throw error;
     }
   };
 
   const signOut = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-      setUser(null);
-      await router.push('/signin');
-      router.refresh();
-    } catch (error) {
-      console.error('Sign out error:', error);
+    const { error } = await supabase.auth.signOut();
+    if (error) {
       throw error;
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        signIn,
+        signUp,
+        signOut,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

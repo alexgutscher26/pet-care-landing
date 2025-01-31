@@ -12,25 +12,19 @@ export async function middleware(req: NextRequest) {
   } = await supabase.auth.getSession();
 
   // Define route types
-  const protectedRoutes = ['/dashboard'];
-  const authRoutes = ['/signin', '/signup'];
-  
-  const isProtectedRoute = protectedRoutes.some((path) => 
-    req.nextUrl.pathname.startsWith(path)
-  );
-  
-  const isAuthRoute = authRoutes.some((path) => 
-    req.nextUrl.pathname.startsWith(path)
+  const publicRoutes = ['/', '/signin', '/signup'];
+  const isPublicRoute = publicRoutes.some((path) => 
+    req.nextUrl.pathname === path
   );
 
-  // If user is signed in and tries to access auth routes
-  if (session && isAuthRoute) {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+  // If user is not signed in and tries to access any non-public route
+  if (!session && !isPublicRoute) {
+    return NextResponse.redirect(new URL('/signin', req.url));
   }
 
-  // If user is not signed in and tries to access protected routes
-  if (!session && isProtectedRoute) {
-    return NextResponse.redirect(new URL('/signin', req.url));
+  // If user is signed in and tries to access auth routes
+  if (session && ['/signin', '/signup'].includes(req.nextUrl.pathname)) {
+    return NextResponse.redirect(new URL('/dashboard', req.url));
   }
 
   return res;
@@ -44,7 +38,8 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public folder
+     * - api routes
      */
-    '/((?!_next/static|_next/image|favicon.ico|public/).*)',
+    '/((?!_next/static|_next/image|favicon.ico|public/|api/).*)',
   ],
 };
