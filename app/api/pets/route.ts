@@ -4,7 +4,8 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
+    const cookieStore = cookies();
+    const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -45,7 +46,8 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
+    const cookieStore = cookies();
+    const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -72,7 +74,8 @@ export async function GET(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
+    const cookieStore = cookies();
+    const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
