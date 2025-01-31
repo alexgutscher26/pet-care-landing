@@ -13,6 +13,7 @@ import { Analytics } from '@/lib/analytics';
 
 interface DashboardStats {
   totalPets: number;
+  petsThisMonth: number;
   upcomingAppointments: number;
   activeReminders: number;
   recentActivities: Array<{
@@ -86,7 +87,7 @@ export default function DashboardPage() {
     {
       title: "Total Pets",
       value: dashboardStats?.totalPets.toString() || "0",
-      change: "+1 this month",
+      change: dashboardStats?.petsThisMonth ? `+${dashboardStats.petsThisMonth} this month` : undefined,
       icon: PawPrint,
     },
     {
@@ -136,7 +137,7 @@ export default function DashboardPage() {
                   <p className="text-sm font-medium text-gray-600">{stat.title}</p>
                   <div className="flex items-baseline gap-2">
                     <h3 className="text-2xl font-bold">{stat.value}</h3>
-                    <span className="text-sm text-gray-500">{stat.change}</span>
+                    {stat.change && <span className="text-sm text-gray-500">{stat.change}</span>}
                   </div>
                 </div>
               </div>
