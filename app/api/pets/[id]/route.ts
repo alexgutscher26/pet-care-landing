@@ -2,34 +2,77 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     const supabase = createRouteHandlerClient({ cookies });
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const { name, breed, age, weight, photoUrl, description } = await req.json();
+    const { data, error } = await supabase
+      .from('pets')
+      .select('*')
+      .eq('id', params.id)
+      .eq('user_id', user.id)
+      .single();
 
-    if (!name || !breed || !age || !weight) {
-      return new NextResponse('Missing required fields', { status: 400 });
+    if (error) {
+      return new NextResponse(error.message, { status: 500 });
+    }
+
+    if (!data) {
+      return new NextResponse('Pet not found', { status: 404 });
+    }
+
+    return NextResponse.json(data);
+  } catch (error) {
+    return new NextResponse('Internal Error', { status: 500 });
+  }
+}
+
+export async function PATCH(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const supabase = createRouteHandlerClient({ cookies });
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
+    const body = await req.json();
+
+    // Validate that the pet belongs to the user
+    const { data: existingPet, error: fetchError } = await supabase
+      .from('pets')
+      .select('id')
+      .eq('id', params.id)
+      .eq('user_id', user.id)
+      .single();
+
+    if (fetchError || !existingPet) {
+      return new NextResponse('Pet not found', { status: 404 });
     }
 
     const { data, error } = await supabase
       .from('pets')
-      .insert({
-        name,
-        breed,
-        age,
-        weight,
-        photo_url: photoUrl,
-        description,
-        user_id: user.id,
+      .update({
+        name: body.name,
+        breed: body.breed,
+        age: body.age,
+        weight: body.weight,
+        photo_url: body.photo_url,
+        description: body.description,
       })
+      .eq('id', params.id)
+      .eq('user_id', user.id)
       .select()
       .single();
 
@@ -43,34 +86,10 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: Request) {
-  try {
-    const supabase = createRouteHandlerClient({ cookies });
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      return new NextResponse('Unauthorized', { status: 401 });
-    }
-
-    const { data, error } = await supabase
-      .from('pets')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      return new NextResponse(error.message, { status: 500 });
-    }
-
-    return NextResponse.json(data);
-  } catch (error) {
-    return new NextResponse('Internal Error', { status: 500 });
-  }
-}
-
-export async function DELETE(req: Request) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     const supabase = createRouteHandlerClient({ cookies });
     const { data: { user } } = await supabase.auth.getUser();
@@ -79,17 +98,10 @@ export async function DELETE(req: Request) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const { searchParams } = new URL(req.url);
-    const petId = searchParams.get('id');
-
-    if (!petId) {
-      return new NextResponse('Pet ID is required', { status: 400 });
-    }
-
     const { error } = await supabase
       .from('pets')
       .delete()
-      .eq('id', petId)
+      .eq('id', params.id)
       .eq('user_id', user.id);
 
     if (error) {

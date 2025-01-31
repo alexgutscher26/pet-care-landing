@@ -1,33 +1,66 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Pet } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
+import { Pencil, Trash2 } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export function PetList() {
-  const [pets, setPets] = useState<Pet[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchPets = async () => {
-      try {
-        const response = await fetch('/api/pets');
-        if (!response.ok) {
-          throw new Error('Failed to fetch pets');
-        }
-        const data = await response.json();
-        setPets(data);
-      } catch (error) {
-        console.error('Error fetching pets:', error);
-      } finally {
-        setIsLoading(false);
+  const { data: pets, isLoading } = useQuery<Pet[]>({
+    queryKey: ['pets'],
+    queryFn: async () => {
+      const response = await fetch('/api/pets');
+      if (!response.ok) {
+        throw new Error('Failed to fetch pets');
       }
-    };
+      return response.json();
+    },
+  });
 
-    fetchPets();
-  }, []);
+  const handleDelete = async (petId: string) => {
+    try {
+      const response = await fetch(`/api/pets/${petId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete pet');
+      }
+
+      queryClient.invalidateQueries({ queryKey: ['pets'] });
+      toast({
+        title: "Success",
+        description: "Pet has been deleted.",
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to delete pet. Please try again.",
+      });
+    }
+  };
 
   if (isLoading) {
     return (
@@ -47,7 +80,7 @@ export function PetList() {
     );
   }
 
-  if (pets.length === 0) {
+  if (!pets || pets.length === 0) {
     return (
       <div className="text-center py-10">
         <h3 className="text-xl font-semibold mb-2">No pets found</h3>
@@ -65,9 +98,47 @@ export function PetList() {
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <span>{pet.name}</span>
-              <span className="text-sm font-normal text-muted-foreground">
-                {pet.age} years old
-              </span>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => router.push(`/pets/${pet.id}/edit`)}
+                  className="h-8 w-8"
+                >
+                  <Pencil className="h-4 w-4" />
+                  <span className="sr-only">Edit {pet.name}</span>
+                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-destructive hover:text-destructive"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      <span className="sr-only">Delete {pet.name}</span>
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will permanently delete {pet.name}'s profile and all associated data.
+                        This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleDelete(pet.id)}
+                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                      >
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
