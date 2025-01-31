@@ -2,6 +2,7 @@ import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import type React from "react" // Added import for React
+import { RainbowButton } from "./ui/rainbow-button"
 
 export function SimplePricing() {
   return (
@@ -42,29 +43,7 @@ export function SimplePricing() {
             </div>
           </div>
 
-          <Button
-            asChild
-            className="mt-8 bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90"
-          >
-            <Link href="#waitlist" className="flex items-center gap-2">
-              Get started
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="ml-2"
-              >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </Link>
-          </Button>
+          <RainbowButton>Get Started</RainbowButton>
         </div>
       </div>
     </section>
