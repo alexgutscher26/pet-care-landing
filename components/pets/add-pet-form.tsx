@@ -74,9 +74,9 @@ export function AddPetForm() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Add a New Pet</CardTitle>
+    <Card className="border rounded-xl shadow-lg">
+      <CardHeader className="space-y-1">
+        <CardTitle className="text-2xl">Add a New Pet</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -88,7 +88,11 @@ export function AddPetForm() {
                 <FormItem>
                   <FormLabel>Pet Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter pet name" {...field} />
+                    <Input 
+                      placeholder="Enter pet name" 
+                      {...field} 
+                      className="rounded-lg"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -101,7 +105,11 @@ export function AddPetForm() {
                 <FormItem>
                   <FormLabel>Breed</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter breed" {...field} />
+                    <Input 
+                      placeholder="Enter breed" 
+                      {...field} 
+                      className="rounded-lg"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -119,6 +127,7 @@ export function AddPetForm() {
                         type="number"
                         placeholder="Enter age"
                         {...field}
+                        className="rounded-lg"
                       />
                     </FormControl>
                     <FormMessage />
@@ -137,6 +146,7 @@ export function AddPetForm() {
                         step="0.01"
                         placeholder="Enter weight"
                         {...field}
+                        className="rounded-lg"
                       />
                     </FormControl>
                     <FormMessage />
@@ -151,11 +161,12 @@ export function AddPetForm() {
                 <FormItem>
                   <FormLabel>Photo URL</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter photo URL" {...field} />
+                    <Input 
+                      placeholder="Enter photo URL" 
+                      {...field} 
+                      className="rounded-lg"
+                    />
                   </FormControl>
-                  <FormDescription>
-                    Provide a URL to your pet's photo
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -167,18 +178,33 @@ export function AddPetForm() {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="Enter description"
+                    <Textarea 
+                      placeholder="Enter description" 
                       {...field}
+                      className="rounded-lg min-h-[100px]"
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isLoading}>
-              {isLoading ? 'Adding...' : 'Add Pet'}
-            </Button>
+            <div className="flex justify-end gap-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => router.push('/pets')}
+                className="rounded-lg"
+              >
+                Cancel
+              </Button>
+              <Button 
+                type="submit" 
+                disabled={isLoading}
+                className="rounded-lg"
+              >
+                {isLoading ? 'Adding...' : 'Add Pet'}
+              </Button>
+            </div>
           </form>
         </Form>
       </CardContent>
