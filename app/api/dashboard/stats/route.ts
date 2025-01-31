@@ -67,6 +67,7 @@ export async function GET() {
 
     const dashboardData = {
       totalPets: pets.length,
+      petsThisMonth,
       upcomingAppointments: appointments?.length || 0,
       activeReminders: reminders?.length || 0,
       recentActivities: activities?.map(activity => ({
