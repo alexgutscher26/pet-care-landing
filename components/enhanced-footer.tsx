@@ -39,6 +39,9 @@ export function EnhancedFooter() {
               <Link href="#contact" className="hover:text-primary">
                 Contact
               </Link>
+              <Link href="https://forms.bluecatreports.com/69tO64Cw/new-form" className="hover:underline underline-offset-4">
+              Bug Report
+            </Link>
             </nav>
           </div>
 

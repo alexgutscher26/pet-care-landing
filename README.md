@@ -51,8 +51,8 @@ An AI-powered Software as a Service (SaaS) platform that revolutionizes pet care
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/pet-care-landing.git
-   cd pet-care-landing
+   git clone https://github.com/alexgutscher26/pet-care-saas.git
+   cd pet-care-saas
    ```
 
 2. Install dependencies:
@@ -87,18 +87,14 @@ pet-care-landing/
 Create a `.env.local` file with the following variables:
 
 ```env
-# Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-
-# Database
+# Database Also using Supabase for Auth
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
-# Analytics
+# Analytics Not Implemented
 NEXT_PUBLIC_GA_MEASUREMENT_ID=
 
-# Payments
+# Payments Not Implemented
 STRIPE_SECRET_KEY=
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 LEMON_SQUEEZY_API_KEY=
