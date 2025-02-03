@@ -35,7 +35,6 @@ An AI-powered Software as a Service (SaaS) platform that revolutionizes pet care
 - **Language:** [TypeScript](https://www.typescriptlang.org/)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 - **UI Components:** [Shadcn UI](https://ui.shadcn.com/)
-- **Authentication:** [Clerk](https://clerk.com/)
 - **Database:** [Supabase](https://supabase.com/)
 - **State Management:** [React Query](https://tanstack.com/query/latest)
 - **Payment Processing:** [Stripe](https://stripe.com/), [Lemon Squeezy](https://www.lemonsqueezy.com/)
