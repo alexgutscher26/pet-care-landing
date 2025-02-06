@@ -87,7 +87,7 @@ export interface Database {
           id: string
           user_id: string
           pet_id: string
-          veterinarian_id: string
+          vet_name: string
           purpose: string
           appointment_date: string
           status: string
@@ -99,7 +99,7 @@ export interface Database {
           id?: string
           user_id: string
           pet_id: string
-          veterinarian_id: string
+          vet_name: string
           purpose: string
           appointment_date: string
           status?: string
@@ -111,7 +111,7 @@ export interface Database {
           id?: string
           user_id?: string
           pet_id?: string
-          veterinarian_id?: string
+          vet_name?: string
           purpose?: string
           appointment_date?: string
           status?: string

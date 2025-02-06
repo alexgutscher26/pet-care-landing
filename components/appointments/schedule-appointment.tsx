@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { addHours, format, parse, startOfHour } from "date-fns";
+import { toast } from "sonner";
 
 const APPOINTMENT_TIMES = Array.from({ length: 12 }, (_, i) => {
   const time = addHours(startOfHour(new Date().setHours(9)), i);
@@ -37,20 +38,36 @@ export function ScheduleAppointment() {
   const { veterinarians, isLoading: isVetsLoading } = useVeterinarians();
 
   const handleSubmit = async () => {
-    if (!petId || !vetId || !purpose || !date || !time) return;
-
-    const appointmentDate = parse(
-      `${date} ${time}`,
-      'yyyy-MM-dd HH:mm',
-      new Date()
-    ).toISOString();
+    if (!petId || !vetId || !purpose || !date || !time) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
 
     try {
+      const appointmentDate = parse(
+        `${date} ${time}`,
+        'yyyy-MM-dd HH:mm',
+        new Date()
+      );
+
+      // Validate the appointment date is in the future
+      if (appointmentDate <= new Date()) {
+        toast.error('Please select a future date and time');
+        return;
+      }
+
+      // Find the selected veterinarian to get their name
+      const selectedVet = veterinarians.find(v => v.id === vetId);
+      if (!selectedVet) {
+        toast.error('Selected veterinarian not found');
+        return;
+      }
+
       await addAppointment({
         pet_id: petId,
-        veterinarian_id: vetId,
+        vet_name: selectedVet.name,
         purpose,
-        appointment_date: appointmentDate,
+        appointment_date: appointmentDate.toISOString(),
         notes: notes || null,
       });
 
@@ -63,8 +80,13 @@ export function ScheduleAppointment() {
       setNotes("");
       setIsExpanded(false);
     } catch (error) {
-      console.error('Failed to schedule appointment:', error);
-      // Error is already handled by the hook with toast
+      if (error instanceof Error) {
+        console.error('Failed to schedule appointment:', error.message);
+      } else {
+        console.error('Failed to schedule appointment:', error);
+      }
+      // Error is handled by the hook with toast, but we can add a fallback
+      toast.error('Failed to schedule appointment. Please try again.');
     }
   };
 
