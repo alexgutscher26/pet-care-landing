@@ -2,39 +2,83 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are currently being supported with security updates.
+The following table outlines the versions of Pet Care that are currently receiving security updates:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Version | Supported          | Notes |
+| ------- | ------------------ | ----- |
+| 1.x.x   | :white_check_mark: | Latest stable release series |
+| 0.x.x   | :x:               | Beta releases - use at your own risk |
 
-**Note:** It is important to use supported versions to ensure that you receive timely security updates. Unsupported versions may have known vulnerabilities that are not addressed.
+We strongly recommend using the latest version of Pet Care to ensure you have all security patches and feature updates.
+
+## Security Features
+
+Pet Care implements several security measures to protect your data:
+
+- **Authentication**: Secure user authentication through [Clerk](https://clerk.com)
+- **Database Security**: Row-level security (RLS) policies in Supabase
+- **API Security**: 
+  - Rate limiting to prevent abuse
+  - Input validation and sanitization
+  - CORS protection
+- **Data Protection**:
+  - Encrypted data at rest and in transit
+  - Regular backups
+  - Secure password hashing
+- **Frontend Security**:
+  - XSS protection
+  - CSRF prevention
+  - Content Security Policy (CSP)
+
+## Best Practices
+
+When using Pet Care Landing, follow these security best practices:
+
+1. Keep your dependencies up to date
+2. Use strong passwords
+3. Enable two-factor authentication when available
+4. Regularly review access logs
+5. Follow the principle of least privilege
+6. Keep your API keys secure and never commit them to version control
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+We take security vulnerabilities seriously. If you discover a security issue, please follow these steps:
 
-Tell them where to go, how often they can expect to get an update on a reported vulnerability, what to expect if the vulnerability is accepted or declined, etc.
+1. **Do Not** disclose the vulnerability publicly until it has been addressed.
+2. Email us at [security@petcarelanding.com](mailto:security@petcarelanding.com) with:
+   - A description of the vulnerability
+   - Steps to reproduce
+   - Potential impact
+   - Suggested fix (if any)
 
-## Secure Coding Practices
+### What to Expect
 
-- Validate all inputs to prevent injection attacks.
-- Use output encoding to protect against cross-site scripting (XSS).
-- Implement proper error handling to avoid leaking sensitive information.
+- **Initial Response**: Within 48 hours
+- **Status Update**: Every 72 hours until resolution
+- **Resolution Timeline**: Typically within 1-2 weeks, depending on severity
 
-## Dependency Management
+### Bug Bounty Program
 
-- Regularly check for updates to dependencies and apply them promptly.
-- Use tools like `npm audit` or `pnpm audit` to identify and fix vulnerabilities in dependencies.
+We currently do not offer a bug bounty program, but we deeply appreciate responsible disclosure of security vulnerabilities.
 
-## Incident Response
+## Security Updates
 
-- Outline the process for responding to security incidents, including how vulnerabilities are prioritized and addressed.
+- Security updates are released as soon as possible after a vulnerability is confirmed
+- Updates are distributed through our standard release channels
+- Critical updates are announced through our security mailing list
 
-## Security Resources
+To stay informed about security updates:
+1. Watch our GitHub repository
+2. Subscribe to our security mailing list
+3. Follow our Twitter account [@PetCareLanding](https://twitter.com/PetCareLanding)
 
-- [OWASP Top Ten](https://owasp.org/www-project-top-ten/): A list of the top ten most critical web application security risks.
-- [Secure Coding Guidelines](https://www.owasp.org/index.php/Secure_Coding_Practices): Best practices for secure coding.
+## Contact
+
+For security-related questions or concerns:
+- Email: security@petcarelanding.com
+- PGP Key: [Download PGP Key](https://petcarelanding.com/security/pgp-key.asc)
+
+## Acknowledgments
+
+We maintain a [Hall of Fame](https://petcarelanding.com/security/hall-of-fame) to recognize security researchers who have responsibly disclosed vulnerabilities.
