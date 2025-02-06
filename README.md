@@ -56,7 +56,6 @@ An AI-powered Software as a Service (SaaS) platform that revolutionizes pet care
 
 ### Backend & Infrastructure
 - **Database**: [Supabase](https://supabase.com/)
-- **Authentication**: [Clerk](https://clerk.dev/)
 - **File Storage**: [Supabase Storage](https://supabase.com/storage)
 - **API Integration**: REST & GraphQL support
 
