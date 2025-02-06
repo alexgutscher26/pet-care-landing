@@ -12,7 +12,9 @@ import {
   Bell,
   Settings,
   HelpCircle,
-  LogOut
+  LogOut,
+  FileText,
+  CalendarIcon,
 } from "lucide-react";
 
 const routes = [
@@ -26,6 +28,18 @@ const routes = [
     label: "Pets",
     icon: PawPrint,
     href: "/pets",
+    color: "text-indigo-500"
+  },
+  {
+    label: "Records",
+    icon: FileText,
+    href: "/records",
+    color: "text-indigo-500"
+  },
+  {
+    label: "Appointments",
+    icon: CalendarIcon,
+    href: "/vet-appointments",
     color: "text-indigo-500"
   },
   {

@@ -31,7 +31,7 @@ const quickActions = [
   },
   { 
     label: "Schedule Appointment", 
-    href: "/appointments/schedule",
+    href: "vet-appointments",
     description: "Book a new appointment"
   },
   { 

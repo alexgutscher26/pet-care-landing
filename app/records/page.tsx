@@ -9,13 +9,11 @@ export const metadata: Metadata = {
 
 export default function RecordsPage() {
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-6 px-4">
       <div className="bg-white rounded-lg shadow-sm border p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-semibold">Pet Health Records</h1>
-          <AddHealthRecord />
-        </div>
+        <h1 className="text-2xl font-semibold mb-6">Pet Health Records</h1>
         <HealthRecordsList />
+        <AddHealthRecord />
       </div>
     </div>
   )
